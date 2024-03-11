@@ -1,0 +1,16 @@
+<!-- rounded_top_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background color for the entire CardView -->
+    <item android:drawable="@color/white" />
+
+    <!-- Rounded corners for the top of the CardView -->
+    <item
+        android:topLeftRadius="20dp"
+        android:topRightRadius="20dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+</layer-list>
