@@ -46,6 +46,12 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Hotel hotel = hotelList.get(position);
         holder.bind(hotel);
+
+        // Load hotel image using Glide (or any other image loading library)
+        Glide.with(context)
+                .load(hotel.getImageUrl())
+                .placeholder(R.drawable.image)
+                .into(holder.imageViewHotel);
     }
 
     @Override
@@ -84,12 +90,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
             rateTextView.setText("Ratings: " + hotel.getRating());
             textViewDistance.setText(hotel.getDistance());
 
-            // Load image with Glide
-            RequestOptions requestOptions = new RequestOptions();
-            Glide.with(context)
-                    .setDefaultRequestOptions(requestOptions)
-                    .load(hotel.getImageUrl())
-                    .into(imageViewHotel);
         }
     }
 }
