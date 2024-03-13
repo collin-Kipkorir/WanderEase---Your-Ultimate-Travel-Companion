@@ -19,20 +19,6 @@
         android:layout_height="match_parent"
         tools:context=".HomeFragment">
 
-<!--        <com.google.android.material.appbar.AppBarLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">-->
-
-<!--            <androidx.appcompat.widget.Toolbar-->
-<!--                android:id="@+id/toolbar"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="?attr/actionBarSize"-->
-<!--                android:background="@color/bgr"-->
-<!--                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-<!--                app:title="Home" />-->
-
-<!--        </com.google.android.material.appbar.AppBarLayout>-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -45,10 +31,25 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <View
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="260dp"
-                    android:background="@drawable/backgrd" />
+                    android:layout_height="260dp">
+
+                    <!-- Your ImageView with the JPG image -->
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/beach" />
+
+                    <!-- Semi-transparent overlay view -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        android:background="@color/semi_transparent_black" />
+                </RelativeLayout>
+
                 <TextView
                     android:id="@+id/tv_welcome_message"
                     android:layout_width="wrap_content"
@@ -57,7 +58,7 @@
                     android:layout_margin="10dp"
                     android:textColor="@color/black"
                     android:layout_marginTop="16dp"
-                    android:gravity="center"/>
+                    android:gravity="center" />
                 <ImageView
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
@@ -68,6 +69,7 @@
                     android:contentDescription="TODO"
                     android:elevation="0dp"
                     android:src="@drawable/notifications" />
+
 
 
                 <LinearLayout
@@ -81,19 +83,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Let's Explore"
+                        android:fontFamily="monospace"
+                        android:text="Explore the"
                         android:textAlignment="textStart"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="30sp" />
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="The World"
+                        android:fontFamily="monospace"
                         android:textStyle="bold"
+                        android:text="Beautiful world!"
                         android:textAlignment="textStart"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:layout_marginBottom="11dp"
                         android:textSize="25sp" />
 
@@ -118,7 +121,7 @@
                             android:layout_toEndOf="@id/location_image"
                             android:gravity="bottom"
                             android:text="You are in"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/white" />
                     </RelativeLayout>
 
 
@@ -164,12 +167,14 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="15dp"
                                         android:layout_weight="1"
+                                        android:background="@color/white"
                                         android:orientation="vertical">
 
                                         <androidx.cardview.widget.CardView
                                             android:layout_width="50dp"
                                             android:layout_height="50dp"
                                             android:layout_gravity="center_horizontal"
+                                            android:background="@color/white"
                                             app:cardCornerRadius="50dp">
 
                                             <ImageView
@@ -199,6 +204,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="15dp"
                                         android:layout_weight="1"
+                                        android:background="@color/white"
                                         android:orientation="vertical">
 
                                         <androidx.cardview.widget.CardView
@@ -233,6 +239,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="15dp"
                                         android:layout_weight="1"
+                                        android:background="@color/white"
                                         android:orientation="vertical">
 
                                         <androidx.cardview.widget.CardView
@@ -266,6 +273,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:background="@color/white"
                                         android:orientation="vertical">
 
                                         <androidx.cardview.widget.CardView
@@ -299,7 +307,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="5dp"
-                                    android:text="Hotels Near You"
+                                    android:text="Travel Places"
                                     android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textSize="13dp" />
