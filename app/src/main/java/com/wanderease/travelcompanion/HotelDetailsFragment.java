@@ -62,7 +62,8 @@ public class HotelDetailsFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse(url));
                 startActivity(intent);
-                return true; // Indicate that the URL loading is handled
+                // Indicate that the URL loading is handled
+                return true;
             }
             return super.shouldOverrideUrlLoading(view, url);
         }

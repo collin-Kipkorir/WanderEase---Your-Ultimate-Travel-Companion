@@ -10,6 +10,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +47,7 @@ public class HomeFragment extends Fragment {
     private List<Hotel> hotelList = new ArrayList<>();
     private DatabaseReference databaseReference;
     private static final int REQUEST_LOCATION_PERMISSION = 1001;
+    private TextView tvWelcomeMessage;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -56,6 +60,24 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         tvUserLocation = view.findViewById(R.id.tv_user_location);
+        tvWelcomeMessage = view.findViewById(R.id.tv_welcome_message);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in, set the welcome message
+            String userName = user.getDisplayName();
+            if (userName != null && !userName.isEmpty()) {
+                tvWelcomeMessage.setText("Welcome back, " + userName + "!");
+            } else {
+                // User's name is not available, set a default welcome message
+                tvWelcomeMessage.setText("Welcome back!");
+            }
+            Log.d("HomeFragment", "User display name: " + userName);
+        } else {
+            // User is not signed in, set a default welcome message
+            tvWelcomeMessage.setText("Welcome!");
+            Log.d("HomeFragment", "User is not signed in");
+        }
 
         // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.recyclerView);
