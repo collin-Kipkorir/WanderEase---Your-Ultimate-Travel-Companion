@@ -4,7 +4,6 @@ package com.wanderease.travelcompanion;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -23,8 +22,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +41,7 @@ public class HomeFragment extends Fragment {
     private TextView tvUserLocation;
     private RecyclerView recyclerView;
     private HotelAdapter mAdapter;
-    private List<Hotel> hotelList = new ArrayList<>();
+    private final List<Hotel> hotelList = new ArrayList<>();
     private DatabaseReference databaseReference;
     private static final int REQUEST_LOCATION_PERMISSION = 1001;
     private TextView tvWelcomeMessage;
@@ -153,15 +150,25 @@ public class HomeFragment extends Fragment {
 
     private void getUserLocation() {
         LocationManager locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (locationManager == null) {
+            // Location service is not available
+            tvUserLocation.setText("Location service not available");
             return;
         }
+
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Location permission not granted
+            tvUserLocation.setText("Location permission not granted");
+            return;
+        }
+
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (lastKnownLocation != null) {
             double latitude = lastKnownLocation.getLatitude();
             double longitude = lastKnownLocation.getLongitude();
 
-            // Use Geocoder to get the address from latitude and longitude
+            // Use Geocoder to get the address from latitude and longitude asynchronously
             Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
             try {
                 List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
@@ -177,21 +184,22 @@ public class HomeFragment extends Fragment {
                 tvUserLocation.setText("Error retrieving location");
             }
         } else {
-            tvUserLocation.setText("Nairobi");
+            tvUserLocation.setText("Location not available");
         }
     }
 
-// Handle permission request result
-@Override
-public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    if (requestCode == REQUEST_LOCATION_PERMISSION && grantResults.length > 0
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        // Permission granted, proceed to get user location
-        getUserLocation();
-    } else {
-        // Permission denied, handle accordingly
-        tvUserLocation.setText("Location permission denied");
+
+    // Handle permission request result
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION_PERMISSION && grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // Permission granted, proceed to get user location
+            getUserLocation();
+        } else {
+            // Permission denied, handle accordingly
+            tvUserLocation.setText("Location permission denied");
+        }
     }
-}
 }
