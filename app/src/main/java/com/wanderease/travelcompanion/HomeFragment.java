@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
 
         // Initialize Firebase Database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("hotels");
+        databaseReference = FirebaseDatabase.getInstance().getReference("places");
 
         // Check for location permission
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -118,11 +118,11 @@ public class HomeFragment extends Fragment {
             public void onItemClick(Hotel hotel) {
                 // Serialize the selected hotel to JSON string
                 Gson gson = new Gson();
-                String selectedHotelJson = gson.toJson(hotel);
+                String selectedPlaceJson = gson.toJson(hotel);
 
                 // Create a new Bundle and put the selected hotel JSON string into it
                 Bundle bundle = new Bundle();
-                bundle.putString("selectedHotel", selectedHotelJson);
+                bundle.putString("selectedPlace", selectedPlaceJson);
 
                 // Create HotelDetailsFragment instance and set arguments
                 HotelDetailsFragment hotelDetailsFragment = new HotelDetailsFragment();

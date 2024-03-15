@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
@@ -40,8 +38,8 @@ public class HotelDetailsFragment extends Fragment {
 
         // Retrieve selected hotel information from arguments
         Bundle args = getArguments();
-        if (args != null && args.containsKey("selectedHotel")) {
-            String selectedHotelJson = args.getString("selectedHotel");
+        if (args != null && args.containsKey("selectedPlace")) {
+            String selectedHotelJson = args.getString("selectedPlace");
             Gson gson = new Gson();
             Hotel selectedHotel = gson.fromJson(selectedHotelJson, Hotel.class);
             if (selectedHotel != null) {

@@ -12,14 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.wanderease.travelcompanion.R;
 
 import java.util.List;
 
 public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> {
-    private Context context;
-    private List<Hotel> hotelList;
+    private final Context context;
+    private final List<Hotel> hotelList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -60,8 +58,11 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewName,textViewCost,rateTextView, textViewDistance;
-        private ImageView imageViewHotel;
+        private final TextView textViewName;
+        private final TextView textViewCost;
+        private final TextView rateTextView;
+        private final TextView textViewDistance;
+        private final ImageView imageViewHotel;
 
         public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -87,7 +88,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
         public void bind(Hotel hotel) {
             textViewName.setText(hotel.getName());
             textViewCost.setText(hotel.getCost());
-            rateTextView.setText("Ratings: " + hotel.getRating());
+            rateTextView.setText(hotel.getRating());
             textViewDistance.setText(hotel.getDistance());
 
         }
