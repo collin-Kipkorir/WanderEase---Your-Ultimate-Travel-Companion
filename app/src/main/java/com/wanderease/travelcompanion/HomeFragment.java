@@ -60,9 +60,11 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = view.getWindow();
+            // Get the activity's Window
+            Window window = requireActivity().getWindow();
+            // Set the status bar color
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.semi_transparent_black));
+            window.setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.semi_transparent_black));
         }
         tvUserLocation = view.findViewById(R.id.tv_user_location);
         tvWelcomeMessage = view.findViewById(R.id.tv_welcome_message);
