@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:layout_margin="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:layout_marginTop="16dp"
                     android:gravity="center" />
                 <ImageView
@@ -167,21 +167,21 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="15dp"
                                         android:layout_weight="1"
-                                        android:background="@color/white"
+                                        android:background="@color/grey"
                                         android:orientation="vertical">
 
                                         <androidx.cardview.widget.CardView
                                             android:layout_width="50dp"
                                             android:layout_height="50dp"
                                             android:layout_gravity="center_horizontal"
-                                            android:background="@color/white"
+                                            android:background="@color/grey"
                                             app:cardCornerRadius="50dp">
 
                                             <ImageView
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center"
-                                                android:background="#34000000"
+                                                android:background="@color/white"
                                                 android:padding="10dp"
                                                 android:scaleType="centerCrop"
                                                 android:src="@drawable/travel" />
@@ -204,12 +204,13 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="15dp"
                                         android:layout_weight="1"
-                                        android:background="@color/white"
+                                        android:background="@color/grey"
                                         android:orientation="vertical">
 
                                         <androidx.cardview.widget.CardView
                                             android:layout_width="50dp"
                                             android:layout_height="50dp"
+                                            android:background="@color/white"
                                             android:layout_gravity="center_horizontal"
                                             app:cardCornerRadius="50dp">
 
@@ -217,7 +218,7 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center"
-                                                android:background="#32E91E63"
+                                                android:background="@color/white"
                                                 android:padding="10dp"
                                                 android:scaleType="centerCrop"
                                                 android:src="@drawable/hotel" />
@@ -239,12 +240,13 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="15dp"
                                         android:layout_weight="1"
-                                        android:background="@color/white"
+                                        android:background="@color/grey"
                                         android:orientation="vertical">
 
                                         <androidx.cardview.widget.CardView
                                             android:layout_width="50dp"
                                             android:layout_height="50dp"
+                                            android:background="@color/white"
                                             android:layout_gravity="center_horizontal"
                                             app:cardCornerRadius="50dp">
 
@@ -252,7 +254,7 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center"
-                                                android:background="#34FFC107"
+                                                android:background="@color/white"
                                                 android:padding="10dp"
                                                 android:scaleType="centerCrop"
                                                 android:src="@drawable/flight" />
@@ -273,20 +275,21 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:background="@color/white"
+                                        android:background="@color/grey"
                                         android:orientation="vertical">
 
                                         <androidx.cardview.widget.CardView
                                             android:layout_width="50dp"
                                             android:layout_height="50dp"
                                             android:layout_gravity="center_horizontal"
+                                            android:background="@color/white"
                                             app:cardCornerRadius="50dp">
 
                                             <ImageView
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center"
-                                                android:background="#1E000000"
+                                                android:background="@color/white"
                                                 android:padding="10dp"
                                                 android:scaleType="centerCrop"
                                                 android:src="@drawable/offer" />
@@ -303,11 +306,12 @@
                                             android:textSize="12dp" />
                                     </LinearLayout>
                                 </LinearLayout>
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="5dp"
-                                    android:text="Travel Places"
+                                    android:layout_margin="10dp"
+                                    android:text="Most Popular Destinations and Hotels"
                                     android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textSize="13dp" />
