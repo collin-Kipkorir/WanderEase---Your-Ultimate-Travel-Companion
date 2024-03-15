@@ -3,7 +3,9 @@ package com.wanderease.travelcompanion;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -96,7 +99,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
 
         // Initialize Firebase Database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("hotels");
+        databaseReference = FirebaseDatabase.getInstance().getReference("places");
 
         // Check for location permission
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -114,26 +117,29 @@ public class HomeFragment extends Fragment {
 
         // Set click listener for hotel items
         mAdapter.setOnItemClickListener(new HotelAdapter.OnItemClickListener() {
+            // Inside onItemClick method in HomeFragment
             @Override
-            public void onItemClick(Hotel hotel) {
-                // Serialize the selected hotel to JSON string
-                Gson gson = new Gson();
-                String selectedHotelJson = gson.toJson(hotel);
+            public void onItemClick(Hotel hotel, ImageView imageView, TextView textViewName, TextView rateTextView, StarRatingView starRatingView) {
+                Intent intent = new Intent(getActivity(), PlaceActivity.class);
+                imageView.setDrawingCacheEnabled(true);
+                Bitmap bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
+                imageView.setDrawingCacheEnabled(false);
 
-                // Create a new Bundle and put the selected hotel JSON string into it
-                Bundle bundle = new Bundle();
-                bundle.putString("selectedHotel", selectedHotelJson);
+                // Pass hotel details
+                intent.putExtra("hotel", new Gson().toJson(hotel));
+                intent.putExtra("imageViewBitmap", bitmap);
+                intent.putExtra("textViewName", textViewName.getText().toString());
+                intent.putExtra("rateTextView", rateTextView.getText().toString());
 
-                // Create HotelDetailsFragment instance and set arguments
-                HotelDetailsFragment hotelDetailsFragment = new HotelDetailsFragment();
-                hotelDetailsFragment.setArguments(bundle);
+                // Pass agent details
+                intent.putExtra("agentName", hotel.getAgentName());
+                intent.putExtra("agentNumber", hotel.getAgentNumber());
+                intent.putExtra("placeDescription", hotel.getPlaceDescription());
 
-                // Replace the current fragment with HotelDetailsFragment
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.flFragment, hotelDetailsFragment)
-                        .addToBackStack(null)
-                        .commit();
+                startActivity(intent);
             }
+
+
         });
 
         return view;

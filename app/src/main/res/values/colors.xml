@@ -3,7 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#EEF3F3</color>
+    <color name="greyd">#494949</color>
     <color name="bgr">#0DEAD5</color>
+    <color name="yellow">#FFC107</color>
     <color name="bgrl">#EEF3F3</color>
     <color name="semi_transparent_black">#80000000</color>
 

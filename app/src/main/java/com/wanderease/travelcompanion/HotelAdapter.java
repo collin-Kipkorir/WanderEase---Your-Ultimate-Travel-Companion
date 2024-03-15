@@ -1,6 +1,5 @@
 package com.wanderease.travelcompanion;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +11,27 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.wanderease.travelcompanion.R;
 
 import java.util.List;
 
 public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> {
-    private Context context;
-    private List<Hotel> hotelList;
+    private final Context context;
+    private final List<Hotel> hotelList;
     private OnItemClickListener mListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(Hotel hotel);
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Hotel hotel = hotelList.get(position);
+        holder.bind(hotel);
+
+        // Load hotel image using Glide (or any other image loading library)
+        Glide.with(context)
+                .load(hotel.getImageUrl())
+                .placeholder(R.drawable.image)
+                .into(holder.imageViewPlace);
+        // Set the rating for StarRatingView
+        float rating = Float.parseFloat(hotel.getRating());
+        holder.starRatingView.setRating(rating);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -42,16 +50,8 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
         return new ViewHolder(view, mListener);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Hotel hotel = hotelList.get(position);
-        holder.bind(hotel);
-
-        // Load hotel image using Glide (or any other image loading library)
-        Glide.with(context)
-                .load(hotel.getImageUrl())
-                .placeholder(R.drawable.image)
-                .into(holder.imageViewHotel);
+    public interface OnItemClickListener {
+        void onItemClick(Hotel hotel, ImageView imageView, TextView textViewName, TextView rateTextView, StarRatingView starRatingView);
     }
 
     @Override
@@ -60,16 +60,19 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewName,textViewCost,rateTextView, textViewDistance;
-        private ImageView imageViewHotel;
+        private final TextView textViewName;
+        private final TextView rateTextView;
+        private final TextView textViewDistance;
+        private final ImageView imageViewPlace;
+        private final StarRatingView starRatingView; // Add this line
 
         public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.titleTextView);
-            textViewCost = itemView.findViewById(R.id.costTextView);
             rateTextView = itemView.findViewById(R.id.rateTextView);
             textViewDistance = itemView.findViewById(R.id.distance);
-            imageViewHotel = itemView.findViewById(R.id.imageView);
+            imageViewPlace = itemView.findViewById(R.id.imageView);
+            starRatingView = itemView.findViewById(R.id.starRatingView); // Initialize the StarRatingView
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,7 +80,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(hotelList.get(position));
+                            listener.onItemClick(hotelList.get(position), imageViewPlace, textViewName, rateTextView, starRatingView);
                         }
                     }
                 }
@@ -86,10 +89,8 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
 
         public void bind(Hotel hotel) {
             textViewName.setText(hotel.getName());
-            textViewCost.setText(hotel.getCost());
-            rateTextView.setText("Ratings: " + hotel.getRating());
+            rateTextView.setText(hotel.getRating());
             textViewDistance.setText(hotel.getDistance());
-
         }
     }
 }
