@@ -54,6 +54,7 @@ dependencies {
 
     //User Authentication
     implementation 'com.google.firebase:firebase-auth:22.3.1'
+    implementation 'com.firebaseui:firebase-ui-firestore:7.2.0'
 
 
 }

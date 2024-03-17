@@ -36,7 +36,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -117,7 +116,6 @@ public class HomeFragment extends Fragment {
 
         // Set click listener for hotel items
         mAdapter.setOnItemClickListener(new HotelAdapter.OnItemClickListener() {
-            // Inside onItemClick method in HomeFragment
             @Override
             public void onItemClick(Hotel hotel, ImageView imageView, TextView textViewName, TextView rateTextView, StarRatingView starRatingView) {
                 Intent intent = new Intent(getActivity(), PlaceActivity.class);
@@ -126,7 +124,6 @@ public class HomeFragment extends Fragment {
                 imageView.setDrawingCacheEnabled(false);
 
                 // Pass hotel details
-                intent.putExtra("hotel", new Gson().toJson(hotel));
                 intent.putExtra("imageViewBitmap", bitmap);
                 intent.putExtra("textViewName", textViewName.getText().toString());
                 intent.putExtra("rateTextView", rateTextView.getText().toString());
@@ -136,11 +133,13 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("agentNumber", hotel.getAgentNumber());
                 intent.putExtra("placeDescription", hotel.getPlaceDescription());
 
+                // Pass the placeId
+                intent.putExtra("placeId", hotel.getPlaceId());
+
                 startActivity(intent);
             }
-
-
         });
+
 
         return view;
     }
@@ -152,6 +151,10 @@ public class HomeFragment extends Fragment {
                 hotelList.clear(); // Clear existing data
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Hotel hotel = snapshot.getValue(Hotel.class);
+                    // Retrieve placeId from the snapshot key
+                    String placeId = snapshot.getKey();
+                    // Set the placeId to the hotel object
+                    hotel.setPlaceId(placeId);
                     hotelList.add(hotel);
                 }
                 mAdapter.notifyDataSetChanged();
@@ -163,6 +166,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 
     private void getUserLocation() {
         LocationManager locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);

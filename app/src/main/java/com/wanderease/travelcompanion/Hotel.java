@@ -1,6 +1,7 @@
 package com.wanderease.travelcompanion;
 
 public class Hotel {
+    private String placeId;
     private String name;
     private String rating;
     private String cost;
@@ -27,6 +28,14 @@ public class Hotel {
         this.agentName = agentName;
         this.agentNumber = agentNumber;
         this.placeDescription = placeDescription;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
     public String getName() {

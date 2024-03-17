@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,6 +18,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class PlaceActivity extends AppCompatActivity {
 
@@ -26,6 +39,10 @@ public class PlaceActivity extends AppCompatActivity {
     private TextView agentNameTextView, placeDescriptionTextView;
 
     private String agentNumber; // Added to store agent number
+    private RecyclerView hotelRecyclerView;
+    private HotelsAdapter hotelAdapter;
+    private DatabaseReference hotelsRef;
+    private TextView placeIdTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +113,58 @@ public class PlaceActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        // Retrieve the place ID from the intent
+        String placeId = getIntent().getStringExtra("placeId");
+// Get a reference to the Firebase database
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("places").child(placeId).child("hotels");
+
+// Initialize a list to hold the hotel data
+        List<HashMap<String, String>> hotelDataList = new ArrayList<>();
+
+// Attach a listener to read the data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Clear the previous list
+                hotelDataList.clear();
+
+                // Iterate through the hotels and add them to the list
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    HashMap<String, String> hotelData = new HashMap<>();
+                    hotelData.put("hotelName", snapshot.child("hotelName").getValue(String.class));
+                    hotelData.put("hotelCost", snapshot.child("hotelCost").getValue(String.class));
+                    hotelData.put("hotelRating", snapshot.child("hotelRating").getValue(String.class));
+                    hotelData.put("hotelImage", snapshot.child("hotelImage").getValue(String.class)); // Fetch image URL
+                    // Add other fields as needed
+                    hotelDataList.add(hotelData);
+                }
+
+                // Update the RecyclerView with the new data
+                updateRecyclerView(hotelDataList);
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle any errors
+                Log.e("Firebase Error", databaseError.getMessage());
+            }
+        });
+
+    }
+
+    // Method to update the RecyclerView
+    private void updateRecyclerView(List<HashMap<String, String>> hotelDataList) {
+        // Initialize RecyclerView and HotelAdapter
+        hotelRecyclerView = findViewById(R.id.hotelRecyclerView);
+        hotelAdapter = new HotelsAdapter(this, hotelDataList);
+        // Set LinearLayoutManager with horizontal orientation
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        hotelRecyclerView.setLayoutManager(layoutManager);
+
+        hotelRecyclerView.setAdapter(hotelAdapter);
     }
 
     // Method to initiate the call
