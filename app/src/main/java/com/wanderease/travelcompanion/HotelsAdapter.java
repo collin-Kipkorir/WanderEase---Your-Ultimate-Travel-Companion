@@ -41,6 +41,12 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
         holder.hotelCostTextView.setText(hotelData.get("hotelCost"));
         holder.hotelRatingTextView.setText(hotelData.get("hotelRating"));
 
+
+        // Set star rating
+        String ratingString = hotelData.get("hotelRating");
+        float rating = Float.parseFloat(ratingString);
+        holder.hotelRatingView.setRating(rating);
+
         // Load image using Glide
         String imageUrl = hotelData.get("hotelImage");
         if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -63,6 +69,7 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
     public static class HotelViewHolder extends RecyclerView.ViewHolder {
         TextView hotelNameTextView, hotelCostTextView, hotelRatingTextView;
         ImageView hotelImageView;
+        StarRatingView hotelRatingView; // Add this line
 
         public HotelViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,6 +77,8 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
             hotelCostTextView = itemView.findViewById(R.id.hotelCostTextView);
             hotelRatingTextView = itemView.findViewById(R.id.hotelRateTextView);
             hotelImageView = itemView.findViewById(R.id.hotelImageView);
+            hotelRatingView = itemView.findViewById(R.id.hotelRatingView); // Initialize the hotelRatingView
         }
     }
+
 }
