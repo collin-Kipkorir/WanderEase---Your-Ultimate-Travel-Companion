@@ -1,6 +1,7 @@
 package com.wanderease.travelcompanion;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,41 +36,17 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
     @Override
     public void onBindViewHolder(@NonNull HotelViewHolder holder, int position) {
         HashMap<String, String> hotelData = hotelsList.get(position);
-
-        // Bind data to views
-        holder.hotelNameTextView.setText(hotelData.get("hotelName"));
-        holder.hotelCostTextView.setText(hotelData.get("hotelCost"));
-        holder.hotelRatingTextView.setText(hotelData.get("hotelRating"));
-
-
-        // Set star rating
-        String ratingString = hotelData.get("hotelRating");
-        float rating = Float.parseFloat(ratingString);
-        holder.hotelRatingView.setRating(rating);
-
-        // Load image using Glide
-        String imageUrl = hotelData.get("hotelImage");
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            Glide.with(context)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.image) // Placeholder image while loading (optional)
-                    .into(holder.hotelImageView);
-        } else {
-            // If imageUrl is null or empty, you may want to set a default image or handle it as needed
-            holder.hotelImageView.setImageResource(R.drawable.image);
-        }
+        holder.bind(hotelData);
     }
-
 
     @Override
     public int getItemCount() {
         return hotelsList.size();
     }
 
-    public static class HotelViewHolder extends RecyclerView.ViewHolder {
+    public class HotelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView hotelNameTextView, hotelCostTextView, hotelRatingTextView;
         ImageView hotelImageView;
-        StarRatingView hotelRatingView; // Add this line
 
         public HotelViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,8 +54,29 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
             hotelCostTextView = itemView.findViewById(R.id.hotelCostTextView);
             hotelRatingTextView = itemView.findViewById(R.id.hotelRateTextView);
             hotelImageView = itemView.findViewById(R.id.hotelImageView);
-            hotelRatingView = itemView.findViewById(R.id.hotelRatingView); // Initialize the hotelRatingView
+            itemView.setOnClickListener(this);
+        }
+
+        public void bind(HashMap<String, String> hotelData) {
+            hotelNameTextView.setText(hotelData.get("hotelName"));
+            hotelCostTextView.setText(hotelData.get("hotelCost"));
+            hotelRatingTextView.setText(hotelData.get("hotelRating"));
+            Glide.with(context).load(hotelData.get("hotelImage")).into(hotelImageView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                HashMap<String, String> hotelData = hotelsList.get(position);
+                Intent intent = new Intent(context, HotelActivity.class);
+                intent.putExtra("hotelName", hotelData.get("hotelName"));
+                intent.putExtra("hotelCost", hotelData.get("hotelCost"));
+                intent.putExtra("hotelRating", hotelData.get("hotelRating"));
+                intent.putExtra("hotelImage", hotelData.get("hotelImage"));
+                context.startActivity(intent);
+            }
         }
     }
-
 }
+

@@ -1,0 +1,45 @@
+<!-- activity_hotel.xml -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context=".HotelActivity">
+
+    <ImageView
+        android:id="@+id/hotelImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image" />
+
+    <TextView
+        android:id="@+id/hotelNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hotelImageView"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Hotel Name" />
+
+    <TextView
+        android:id="@+id/hotelCostTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hotelNameTextView"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        tools:text="Cost: $100" />
+
+    <TextView
+        android:id="@+id/hotelRatingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hotelCostTextView"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        tools:text="Rating: 4.5" />
+
+</RelativeLayout>

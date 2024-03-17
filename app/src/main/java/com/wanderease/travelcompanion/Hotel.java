@@ -13,12 +13,14 @@ public class Hotel {
     private String agentName;
     private String agentNumber;
     private String placeDescription;
+    private double latitude;
+    private double longitude;
 
     public Hotel() {
         // Default constructor required for Firebase
     }
 
-    public Hotel(String name, String rating, String cost, String distance, String imageUrl, String url, String agentName, String agentNumber, String placeDescription) {
+    public Hotel(String name, String rating, String cost, String distance, String imageUrl, String url, String agentName, String agentNumber, String placeDescription, double latitude, double longitude) {
         this.name = name;
         this.rating = rating;
         this.cost = cost;
@@ -28,6 +30,8 @@ public class Hotel {
         this.agentName = agentName;
         this.agentNumber = agentNumber;
         this.placeDescription = placeDescription;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getPlaceId() {
@@ -111,5 +115,13 @@ public class Hotel {
 
     public void setPlaceDescription(String placeDescription) {
         this.placeDescription = placeDescription;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }

@@ -18,9 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PlaceActivity extends AppCompatActivity {
+public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private ImageView imageView;
     private TextView textView, rateTextView;
@@ -41,8 +48,8 @@ public class PlaceActivity extends AppCompatActivity {
     private String agentNumber; // Added to store agent number
     private RecyclerView hotelRecyclerView;
     private HotelsAdapter hotelAdapter;
-    private DatabaseReference hotelsRef;
-    private TextView placeIdTextView;
+    private GoogleMap mMap;
+    private LatLng locationLatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,16 @@ public class PlaceActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
         }
+        // Retrieve latitude and longitude from intent extras
+        double latitude = getIntent().getDoubleExtra("latitude", 0);
+        double longitude = getIntent().getDoubleExtra("longitude", 0);
+        locationLatLng = new LatLng(latitude, longitude);
 
+        // Load the map fragment
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.mapContainer, mapFragment).commit();
+        mapFragment.getMapAsync(this);
         // Initialize views
         imageView = findViewById(R.id.imageView);
         textView = findViewById(R.id.nameTextView);
@@ -154,6 +170,16 @@ public class PlaceActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        // Enable zoom controls
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        // Add a marker at the specified location and move the camera
+        googleMap.addMarker(new MarkerOptions().position(locationLatLng));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 15));
+    }
+
 
     // Method to update the RecyclerView
     private void updateRecyclerView(List<HashMap<String, String>> hotelDataList) {

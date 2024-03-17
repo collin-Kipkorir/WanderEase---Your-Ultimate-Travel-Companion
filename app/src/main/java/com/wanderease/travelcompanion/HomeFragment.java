@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment {
         // Set click listener for hotel items
         mAdapter.setOnItemClickListener(new HotelAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Hotel hotel, ImageView imageView, TextView textViewName, TextView rateTextView, StarRatingView starRatingView) {
+            public void onItemClick(Hotel hotel, ImageView imageView, TextView textViewName, TextView rateTextView, StarRatingView starRatingView, LatLng latLng) {
                 Intent intent = new Intent(getActivity(), PlaceActivity.class);
                 imageView.setDrawingCacheEnabled(true);
                 Bitmap bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
@@ -132,6 +133,10 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("agentName", hotel.getAgentName());
                 intent.putExtra("agentNumber", hotel.getAgentNumber());
                 intent.putExtra("placeDescription", hotel.getPlaceDescription());
+
+                // Pass latitude and longitude
+                intent.putExtra("latitude", latLng.latitude);
+                intent.putExtra("longitude", latLng.longitude);
 
                 // Pass the placeId
                 intent.putExtra("placeId", hotel.getPlaceId());

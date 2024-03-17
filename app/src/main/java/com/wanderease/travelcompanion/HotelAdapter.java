@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Hotel hotel, ImageView imageView, TextView textViewName, TextView rateTextView, StarRatingView starRatingView);
+        void onItemClick(Hotel hotel, ImageView imageView, TextView textViewName, TextView rateTextView, StarRatingView starRatingView, LatLng latLng);
     }
 
     @Override
@@ -80,7 +81,9 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(hotelList.get(position), imageViewPlace, textViewName, rateTextView, starRatingView);
+                            Hotel hotel = hotelList.get(position);
+                            LatLng latLng = new LatLng(hotel.getLatitude(), hotel.getLongitude());
+                            listener.onItemClick(hotel, imageViewPlace, textViewName, rateTextView, starRatingView, latLng);
                         }
                     }
                 }

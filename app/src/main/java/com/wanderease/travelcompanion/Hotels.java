@@ -5,7 +5,8 @@ public class Hotels {
     private String hotelName;
     private float hotelRating;
     private double hotelCost;
-    private String placeId; // Add placeId field
+    private String placeId;
+    private String HotelId;
 
     // Default constructor (required by Firebase)
     public Hotels() {
@@ -17,6 +18,7 @@ public class Hotels {
         this.hotelRating = hotelRating;
         this.hotelCost = hotelCost;
         this.placeId = placeId;
+
     }
 
     // Getters and setters for each field
@@ -59,4 +61,5 @@ public class Hotels {
     public void setPlaceId(String placeId) {
         this.placeId = placeId;
     }
+
 }
