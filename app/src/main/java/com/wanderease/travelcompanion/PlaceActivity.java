@@ -62,6 +62,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
         }
+
         // Retrieve latitude and longitude from intent extras
         double latitude = getIntent().getDoubleExtra("latitude", 0);
         double longitude = getIntent().getDoubleExtra("longitude", 0);
@@ -133,6 +134,8 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
 
         // Retrieve the place ID from the intent
         String placeId = getIntent().getStringExtra("placeId");
+
+
 // Get a reference to the Firebase database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("places").child(placeId).child("hotels");
 
@@ -149,6 +152,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
                 // Iterate through the hotels and add them to the list
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     HashMap<String, String> hotelData = new HashMap<>();
+                    hotelData.put("hotelId", snapshot.getKey());
                     hotelData.put("hotelName", snapshot.child("hotelName").getValue(String.class));
                     hotelData.put("hotelCost", snapshot.child("hotelCost").getValue(String.class));
                     hotelData.put("hotelRating", snapshot.child("hotelRating").getValue(String.class));

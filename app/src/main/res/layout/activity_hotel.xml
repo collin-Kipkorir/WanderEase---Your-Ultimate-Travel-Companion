@@ -1,45 +1,165 @@
-<!-- activity_hotel.xml -->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/grey"
     tools:context=".HotelActivity">
 
-    <ImageView
-        android:id="@+id/hotelImageView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/image" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/hotelNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/hotelImageView"
-        android:layout_marginTop="16dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        tools:text="Hotel Name" />
+        <!-- Content that can be scrolled -->
+        <LinearLayout
+            android:id="@+id/hotelDetailsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/hotelCostTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/hotelNameTextView"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"
-        tools:text="Cost: $100" />
+            <ImageView
+                android:id="@+id/hotelImageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image" />
 
-    <TextView
-        android:id="@+id/hotelRatingTextView"
-        android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/hotelNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Hotel Name" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:gravity="start"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/hotelRatingTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:maxLines="1"
+                        android:textColor="@color/yellow"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <com.wanderease.travelcompanion.StarRatingView
+                        android:id="@+id/starRatingView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        app:numStars="5"
+                        app:starSize="15dp"
+                        app:starSpacing="5dp" />
+
+                </LinearLayout>
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="About"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/hotelAboutTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:maxLines="5"
+                    android:text="about hotel"
+                    android:textColor="@color/greyd"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="Amenities"
+                    android:textSize="14sp" />
+                <!-- Hotel Address -->
+                <TextView
+                    android:id="@+id/hotelAddressTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="8dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="Location"
+                    android:textSize="14sp" />
+
+                <!-- Map Fragment Container -->
+                <FrameLayout
+                    android:id="@+id/mapContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:padding="2dp"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/hotelCostTextView"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"
-        tools:text="Rating: 4.5" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hotelCostTextView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/boarder_bgr"
+            android:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Cost: $100" />
+
+        <!-- Book button at the bottom -->
+        <Button
+            android:id="@+id/bookButton"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:background="@drawable/round_background"
+            android:text="BOOK NOW"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>
