@@ -6,22 +6,33 @@ public class Hotels {
     private float hotelRating;
     private double hotelCost;
     private String placeId;
-    private String HotelId;
+    private String hotelId;
+    private double latitude;
+    private double longitude;
 
     // Default constructor (required by Firebase)
     public Hotels() {
     }
 
-    public Hotels(String hotelImage, String hotelName, float hotelRating, double hotelCost, String placeId) {
+    public Hotels(String hotelImage, String hotelName, float hotelRating, double hotelCost, double latitude, double longitude) {
         this.hotelImage = hotelImage;
         this.hotelName = hotelName;
         this.hotelRating = hotelRating;
         this.hotelCost = hotelCost;
-        this.placeId = placeId;
+        this.latitude = latitude;
+        this.longitude = longitude;
 
     }
 
     // Getters and setters for each field
+    public String gethotelId() {
+        return hotelId;
+    }
+
+    public void sethotelId(String hotelId) {
+        this.hotelId = hotelId;
+    }
+
     public String getHotelImage() {
         return hotelImage;
     }
@@ -54,12 +65,12 @@ public class Hotels {
         this.hotelCost = hotelCost;
     }
 
-    public String getPlaceId() {
-        return placeId;
+
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setPlaceId(String placeId) {
-        this.placeId = placeId;
+    public double getLongitude() {
+        return longitude;
     }
-
 }
