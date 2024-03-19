@@ -2,6 +2,7 @@ package com.wanderease.travelcompanion;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -165,6 +166,16 @@ public class HotelActivity extends AppCompatActivity implements OnMapReadyCallba
         editor.putString(bookingKey + "_checkInDate", checkInDate);
 
         editor.apply();
+
+
+        // Redirect user to MainActivity
+        redirectToMainActivity();
+    }
+
+    private void redirectToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void loadHotelDetailsFromFirebase(String hotelId) {

@@ -60,7 +60,7 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.bgr));
         }
 
         // Retrieve latitude and longitude from intent extras
@@ -221,5 +221,11 @@ public class PlaceActivity extends AppCompatActivity implements OnMapReadyCallba
             // Permission denied, inform the user
             Toast.makeText(this, "Call permission denied", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void goBack(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
