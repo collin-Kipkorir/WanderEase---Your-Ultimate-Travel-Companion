@@ -76,7 +76,7 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
                 intent.putExtra("hotelRating", hotelData.get("hotelRating"));
                 intent.putExtra("hotelImage", hotelData.get("hotelImage"));
 
-                // Correctly use "hotelId" instead of "HotelId"
+                //Correctly use "hotelId" instead of "HotelId"
                 intent.putExtra("hotelId", hotelData.get("hotelId")); // Change here
                 intent.putExtra("latitude", hotelData.get("latitude"));
                 intent.putExtra("longitude", hotelData.get("longitude"));
