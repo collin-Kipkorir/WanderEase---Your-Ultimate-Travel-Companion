@@ -1,11 +1,12 @@
 package com.wanderease.travelcompanion;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity
@@ -36,11 +37,7 @@ public class MainActivity extends AppCompatActivity
         if (itemId == R.id.home) {
             selectedFragment = new HomeFragment();
         } else if (itemId == R.id.search) {
-            selectedFragment = new SearchFragment();
-        } else if (itemId == R.id.trip) {
-            selectedFragment = new TripFragment();
-        } else if (itemId == R.id.offer) {
-            selectedFragment = new OffersFragment();
+            selectedFragment = new BookingFragment();
         } else if (itemId == R.id.account) {
             selectedFragment = new ProfileFragment();
         }

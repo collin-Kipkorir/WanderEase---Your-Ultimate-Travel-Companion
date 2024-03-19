@@ -37,6 +37,7 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
     public void onBindViewHolder(@NonNull HotelViewHolder holder, int position) {
         HashMap<String, String> hotelData = hotelsList.get(position);
         holder.bind(hotelData);
+
     }
 
     @Override

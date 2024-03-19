@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
             Window window = requireActivity().getWindow();
             // Set the status bar color
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.black));
+            window.setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.bgr));
         }
         tvUserLocation = view.findViewById(R.id.tv_user_location);
         tvWelcomeMessage = view.findViewById(R.id.tv_welcome_message);
