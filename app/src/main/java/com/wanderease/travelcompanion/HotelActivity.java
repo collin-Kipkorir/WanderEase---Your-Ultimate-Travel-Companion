@@ -73,6 +73,8 @@ public class HotelActivity extends AppCompatActivity implements OnMapReadyCallba
         TextView hotelCostTextView = findViewById(R.id.hotelCostTextView);
         TextView hotelRatingTextView = findViewById(R.id.hotelRatingTextView);
         ImageView hotelImageView = findViewById(R.id.hotelImageView);
+        StarRatingView starRatingView = findViewById(R.id.starRating);
+
 
         bookButton = findViewById(R.id.bookButton);
 
@@ -81,7 +83,8 @@ public class HotelActivity extends AppCompatActivity implements OnMapReadyCallba
         hotelCostTextView.setText(hotelCost);
         hotelRatingTextView.setText(hotelRating);
         Glide.with(this).load(hotelImage).into(hotelImageView);
-
+        float rating = Float.parseFloat(hotelRating);
+        starRatingView.setRating(rating);
         // Load hotel details and amenities
         loadHotelDetailsFromFirebase(hotelId);
 
@@ -245,5 +248,11 @@ public class HotelActivity extends AppCompatActivity implements OnMapReadyCallba
         googleMap.addMarker(new MarkerOptions().position(location).title("Hotel Location"));
         float zoomLevel = 17f;
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel));
+    }
+
+    public void goBack(View view) {
+        Intent intent = new Intent(this, PlaceActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

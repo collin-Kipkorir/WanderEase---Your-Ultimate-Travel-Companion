@@ -71,7 +71,7 @@
                 android:textStyle="bold" />
 
             <com.wanderease.travelcompanion.StarRatingView
-                android:id="@+id/hotelRatingView"
+                android:id="@+id/starRating"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"

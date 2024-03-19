@@ -38,6 +38,9 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
         HashMap<String, String> hotelData = hotelsList.get(position);
         holder.bind(hotelData);
 
+        // Set the rating for StarRatingView
+        float rating = Float.parseFloat(hotelData.get("hotelRating"));
+        holder.starRatingView.setRating(rating);
     }
 
     @Override
@@ -48,6 +51,7 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
     public class HotelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView hotelNameTextView, hotelCostTextView, hotelRatingTextView;
         ImageView hotelImageView;
+        StarRatingView starRatingView;
 
         public HotelViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,6 +59,7 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
             hotelCostTextView = itemView.findViewById(R.id.hotelCostTextView);
             hotelRatingTextView = itemView.findViewById(R.id.hotelRateTextView);
             hotelImageView = itemView.findViewById(R.id.hotelImageView);
+            starRatingView = itemView.findViewById(R.id.starRating); // Initialize the StarRatingView
             itemView.setOnClickListener(this);
         }
 
@@ -75,15 +80,12 @@ public class HotelsAdapter extends RecyclerView.Adapter<HotelsAdapter.HotelViewH
                 intent.putExtra("hotelCost", hotelData.get("hotelCost"));
                 intent.putExtra("hotelRating", hotelData.get("hotelRating"));
                 intent.putExtra("hotelImage", hotelData.get("hotelImage"));
-
-                // Correctly use "hotelId" instead of "HotelId"
-                intent.putExtra("hotelId", hotelData.get("hotelId")); // Change here
+                intent.putExtra("hotelId", hotelData.get("hotelId"));
                 intent.putExtra("latitude", hotelData.get("latitude"));
                 intent.putExtra("longitude", hotelData.get("longitude"));
                 context.startActivity(intent);
             }
         }
-
     }
 }
 
