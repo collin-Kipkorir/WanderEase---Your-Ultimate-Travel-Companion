@@ -43,10 +43,12 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         holder.nightsTextView.setText(String.valueOf(booking.getNights()));
         holder.checkInDateTextView.setText(booking.getCheckInDate());
 
-
         // Load hotel image using Glide
         Glide.with(context).load(booking.getHotelImage()).into(holder.hotelImageView);
 
+        // Set the rating for StarRatingView
+        float rating = Float.parseFloat(booking.getHotelRating());
+        holder.starRatingView.setRating(rating);
     }
 
     @Override
@@ -57,6 +59,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
     public class BookingViewHolder extends RecyclerView.ViewHolder {
         TextView hotelNameTextView, hotelCostTextView, hotelRatingTextView, daysTextView, nightsTextView, checkInDateTextView;
         ImageView hotelImageView;
+        StarRatingView starRatingView;
 
         public BookingViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +70,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             daysTextView = itemView.findViewById(R.id.daysTextView);
             nightsTextView = itemView.findViewById(R.id.nightsTextView);
             checkInDateTextView = itemView.findViewById(R.id.checkInDateTextView);
+            starRatingView = itemView.findViewById(R.id.starRatingview);
         }
     }
 }
