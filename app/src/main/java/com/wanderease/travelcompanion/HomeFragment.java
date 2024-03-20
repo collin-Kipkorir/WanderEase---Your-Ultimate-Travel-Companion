@@ -2,16 +2,19 @@ package com.wanderease.travelcompanion;
 
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,29 +122,48 @@ public class HomeFragment extends Fragment {
         mAdapter.setOnItemClickListener(new HotelAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Hotel hotel, ImageView imageView, TextView textViewName, TextView rateTextView, StarRatingView starRatingView, LatLng latLng) {
-                Intent intent = new Intent(getActivity(), PlaceActivity.class);
-                imageView.setDrawingCacheEnabled(true);
-                Bitmap bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
-                imageView.setDrawingCacheEnabled(false);
+                ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
 
-                // Pass hotel details
-                intent.putExtra("imageViewBitmap", bitmap);
-                intent.putExtra("textViewName", textViewName.getText().toString());
-                intent.putExtra("rateTextView", rateTextView.getText().toString());
+                // set custom layout for progress dialog
+                progressDialog.setContentView(R.layout.custom_progress_dialog);
 
-                // Pass agent details
-                intent.putExtra("agentName", hotel.getAgentName());
-                intent.putExtra("agentNumber", hotel.getAgentNumber());
-                intent.putExtra("placeDescription", hotel.getPlaceDescription());
+                // delay start of next activity for 5 seconds
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                        Intent intent = new Intent(getActivity(), PlaceActivity.class);
+                        imageView.setDrawingCacheEnabled(true);
+                        Bitmap bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
+                        imageView.setDrawingCacheEnabled(false);
 
-                // Pass latitude and longitude
-                intent.putExtra("latitude", latLng.latitude);
-                intent.putExtra("longitude", latLng.longitude);
+                        // Pass hotel details
+                        intent.putExtra("imageViewBitmap", bitmap);
+                        intent.putExtra("textViewName", textViewName.getText().toString());
+                        intent.putExtra("rateTextView", rateTextView.getText().toString());
 
-                // Pass the placeId
-                intent.putExtra("placeId", hotel.getPlaceId());
+                        // Pass agent details
+                        intent.putExtra("agentName", hotel.getAgentName());
+                        intent.putExtra("agentNumber", hotel.getAgentNumber());
+                        intent.putExtra("placeDescription", hotel.getPlaceDescription());
 
-                startActivity(intent);
+                        // Pass latitude and longitude
+                        intent.putExtra("latitude", latLng.latitude);
+                        intent.putExtra("longitude", latLng.longitude);
+
+                        // Pass the placeId
+                        intent.putExtra("placeId", hotel.getPlaceId());
+
+                        startActivity(intent);
+
+                    }
+                }, 5000);
+
             }
         });
 

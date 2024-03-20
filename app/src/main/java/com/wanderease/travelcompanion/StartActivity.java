@@ -1,10 +1,13 @@
 package com.wanderease.travelcompanion;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,9 +143,28 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-        prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        // set custom layout for progress dialog
+        progressDialog.setContentView(R.layout.custom_progress_dialog);
+
+        // delay start of next activity for 5 seconds
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+                prefManager.setFirstTimeLaunch(false);
+                startActivity(new Intent(StartActivity.this, LoginActivity.class));
+                finish();
+
+            }
+        }, 5000);
+
     }
 
     /**
