@@ -1,6 +1,6 @@
 package com.wanderease.travelcompanion;
 
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -59,70 +58,70 @@ public class ProfileFragment extends Fragment {
         buttonChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create a dialog for changing password
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                // Inflate the custom layout
                 LayoutInflater inflater = requireActivity().getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.dialog_change_password, null);
 
                 EditText editTextCurrentPassword = dialogView.findViewById(R.id.editTextCurrentPassword);
                 EditText editTextNewPassword = dialogView.findViewById(R.id.editTextNewPassword);
                 EditText editTextConfirmPassword = dialogView.findViewById(R.id.editTextConfirmPassword);
+                Button buttonChange = dialogView.findViewById(R.id.buttonChange);
 
-                builder.setView(dialogView)
-                        .setTitle("Change Password")
-                        .setPositiveButton("Change", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String currentPassword = editTextCurrentPassword.getText().toString().trim();
-                                String newPassword = editTextNewPassword.getText().toString().trim();
-                                String confirmPassword = editTextConfirmPassword.getText().toString().trim();
+                // Create a dialog without AlertDialog
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(dialogView);
 
-                                // Check if new password and confirm password match
-                                if (!newPassword.equals(confirmPassword)) {
-                                    Toast.makeText(getActivity(), "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
+                // Handle click event of "Change Password" button
+                buttonChange.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String currentPassword = editTextCurrentPassword.getText().toString().trim();
+                        String newPassword = editTextNewPassword.getText().toString().trim();
+                        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-                                // Re-authenticate the user to change password
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                if (user != null) {
-                                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), currentPassword);
-                                    user.reauthenticate(credential)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    // Change password
-                                                    user.updatePassword(newPassword)
-                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    Toast.makeText(getActivity(), "Password updated successfully", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            })
-                                                            .addOnFailureListener(new OnFailureListener() {
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-                                                                    Toast.makeText(getActivity(), "Failed to update password", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            });
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(getActivity(), "Failed to re-authenticate", Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                }
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create().show();
+                        // Check if new password and confirm password match
+                        if (!newPassword.equals(confirmPassword)) {
+                            Toast.makeText(getActivity(), "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        // Re-authenticate the user to change password
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), currentPassword);
+                            user.reauthenticate(credential)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Change password
+                                            user.updatePassword(newPassword)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(getActivity(), "Password updated successfully", Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss(); // Dismiss the dialog after successful password change
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(getActivity(), "Failed to update password", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getActivity(), "Failed to re-authenticate", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    }
+                });
+
+                // Show the dialog
+                dialog.show();
             }
         });
 
