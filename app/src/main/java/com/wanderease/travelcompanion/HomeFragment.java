@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private TextView tvWelcomeMessage;
-
+    private ImageView rooms;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -73,6 +73,14 @@ public class HomeFragment extends Fragment {
             window.setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.bgr));
         }
         tvUserLocation = view.findViewById(R.id.tv_user_location);
+        rooms = view.findViewById(R.id.rooms);
+        rooms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), RoomsActivity.class);
+                startActivity(intent);
+            }
+        });
         tvWelcomeMessage = view.findViewById(R.id.tv_welcome_message);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
