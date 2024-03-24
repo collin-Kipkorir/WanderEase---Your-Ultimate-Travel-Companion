@@ -55,7 +55,8 @@ public class HomeFragment extends Fragment {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private TextView tvWelcomeMessage;
-    private ImageView rooms;
+    private ImageView rooms, trips;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -74,10 +75,18 @@ public class HomeFragment extends Fragment {
         }
         tvUserLocation = view.findViewById(R.id.tv_user_location);
         rooms = view.findViewById(R.id.rooms);
+        trips = view.findViewById(R.id.trips);
         rooms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RoomsActivity.class);
+                startActivity(intent);
+            }
+        });
+        trips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TripsActivity.class);
                 startActivity(intent);
             }
         });

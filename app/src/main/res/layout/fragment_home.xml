@@ -183,6 +183,7 @@
                                             app:cardCornerRadius="50dp">
 
                                             <ImageView
+                                                android:id="@+id/trips"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center"
