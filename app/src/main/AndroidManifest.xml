@@ -28,6 +28,9 @@
         android:theme="@style/Theme.WanderEase"
         tools:targetApi="31">
         <activity
+            android:name=".FlightActivity"
+            android:exported="false" />
+        <activity
             android:name=".TripsActivity"
             android:exported="false" />
         <activity

@@ -1,0 +1,123 @@
+<!-- activity_flight.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FlightActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/bgr"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="6dp"
+                android:onClick="goMain"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Flights"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:padding="16dp">
+
+            <!-- Content that can be scrolled -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!-- UI elements -->
+                <TextView
+                    android:id="@+id/textDeparture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Departure:"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editDeparture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textDeparture"
+                    android:hint="Enter departure location" />
+
+                <TextView
+                    android:id="@+id/textArrival"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editDeparture"
+                    android:layout_marginTop="16dp"
+                    android:text="Arrival:"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editArrival"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textArrival"
+                    android:hint="Enter arrival location" />
+
+                <TextView
+                    android:id="@+id/textDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editArrival"
+                    android:layout_marginTop="16dp"
+                    android:text="Date:"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textDate"
+                    android:hint="Enter date" />
+
+                <TextView
+                    android:id="@+id/textPassengers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editDate"
+                    android:layout_marginTop="16dp"
+                    android:text="Passengers:"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editPassengers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textPassengers"
+                    android:hint="Enter number of passengers" />
+
+                <Button
+                    android:id="@+id/buttonSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editPassengers"
+                    android:text="Search Flights" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</RelativeLayout>
